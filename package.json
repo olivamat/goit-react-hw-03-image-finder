@@ -18,8 +18,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
-    "lint:format": "prettier src/**/*.{js,css,json} --write",
-    "homepage": "https://olivamat.github.io/goit-react-hw-03-image-finder/."
+    "lint:format": "prettier src/**/*.{js,css,json} --write"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,5 +46,6 @@
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "prop-types": "^15.7.2"
-  }
+  },
+  "homepage": "https://olivamat.github.io/goit-react-hw-03-image-finder/."
 }
