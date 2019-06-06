@@ -6,9 +6,13 @@ import styles from "./Gallery.module.css";
 const Gallery = ({ onOpenModal, onChangeLargeImageUrl, images }) => (
   <ul className={styles.gallery}>
     {images.map(image => (
-      <li key={image.id} className={styles.galleryItem}>
+      <li key={image.pageUrl} className={styles.galleryItem}>
         <GalleryItem
-          {...image}
+          webformatURL={image.webformatURL}
+          likes={image.likes}
+          views={image.views}
+          comments={image.comments}
+          downloads={image.downloads}
           onOpenModal={onOpenModal}
           onChangeLargeImageUrl={() =>
             onChangeLargeImageUrl(image.largeImageURL)
