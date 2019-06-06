@@ -4,21 +4,19 @@ import GalleryItem from "../GalleryItem/GalleryItem";
 import styles from "./Gallery.module.css";
 
 const Gallery = ({ onOpenModal, onChangeLargeImageUrl, images }) => (
-  <div>
-    <ul className={styles.gallery}>
-      {images.map(image => (
-        <li key={image.id} className={styles.galleryItem}>
-          <GalleryItem
-            {...image}
-            onOpenModal={onOpenModal}
-            onChangeLargeImageUrl={() =>
-              onChangeLargeImageUrl(image.largeImageURL)
-            }
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
+  <ul className={styles.gallery}>
+    {images.map(image => (
+      <li key={image.id} className={styles.galleryItem}>
+        <GalleryItem
+          {...image}
+          onOpenModal={onOpenModal}
+          onChangeLargeImageUrl={() =>
+            onChangeLargeImageUrl(image.largeImageURL)
+          }
+        />
+      </li>
+    ))}
+  </ul>
 );
 
 Gallery.propTypes = {

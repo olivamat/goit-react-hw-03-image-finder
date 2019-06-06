@@ -33,14 +33,15 @@ export default class App extends Component {
 
   loadMoreImages = () => {
     this.setState({ isLoading: true });
-    const { images } = this.state;
     const pageAdd = this.state.page;
     const { query } = this.state;
 
     imageAPI
       .fetchImages(query, pageAdd)
       .then(({ data }) => {
-        this.setState({ images: [...images, ...data.hits] });
+        this.setState(prevState => ({
+          images: [...prevState.images, ...data.hits]
+        }));
       })
       .catch(error => this.setState({ error }))
       .finally(() => {
