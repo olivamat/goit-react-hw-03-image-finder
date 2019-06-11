@@ -14,16 +14,24 @@ export default class App extends Component {
     error: null,
     page: 1,
     isModalOpen: false,
-    largeImageURL: null
+    largeImageURL: null,
+    query: ""
   };
 
-  fetchImage = ({ query }) => {
-    this.setState({ isLoading: true, query, page: 1, error: null });
-    const { page } = this.state;
-    imageAPI
+  loadFirstImages = query => {
+    this.setState({ query, page: 1, error: null, images: [] });
+    this.fetchImages(query, 1);
+  };
+
+  fetchImages = (query, page) => {
+    this.setState({ isLoading: true });
+    return imageAPI
       .fetchImages(query, page)
       .then(({ data }) => {
-        this.setState({ images: data.hits });
+        this.setState(state => ({
+          images: [...state.images, ...data.hits],
+          page: state.page + 1
+        }));
       })
       .catch(error => this.setState({ error }))
       .finally(() => {
@@ -32,25 +40,14 @@ export default class App extends Component {
   };
 
   loadMoreImages = () => {
-    this.setState({ isLoading: true });
-    const pageAdd = this.state.page;
-    const { query } = this.state;
+    const { query, page } = this.state;
 
-    imageAPI
-      .fetchImages(query, pageAdd)
-      .then(({ data }) => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits]
-        }));
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => {
-        this.setState({ isLoading: false, page: pageAdd + 1 });
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
+    this.fetchImages(query, page).then(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
       });
+    });
   };
 
   handleOpenModal = () => this.setState({ isModalOpen: true });
@@ -66,7 +63,7 @@ export default class App extends Component {
     const { images, isLoading, error, isModalOpen, largeImageURL } = this.state;
     return (
       <div className="App">
-        <SearchForm onSubmitForm={this.fetchImage} />
+        <SearchForm onSubmitForm={this.loadFirstImages} />
         {isLoading && <Loader />}
         {images.length > 0 && (
           <Gallery

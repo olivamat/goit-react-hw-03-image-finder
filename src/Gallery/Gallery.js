@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import GalleryItem from "../GalleryItem/GalleryItem";
 import styles from "./Gallery.module.css";
 
 const Gallery = ({ onOpenModal, onChangeLargeImageUrl, images }) => (
   <ul className={styles.gallery}>
     {images.map(image => (
-      <li key={image.pageUrl} className={styles.galleryItem}>
+      <li key={image.id} className={styles.galleryItem}>
         <GalleryItem
           webformatURL={image.webformatURL}
           likes={image.likes}
